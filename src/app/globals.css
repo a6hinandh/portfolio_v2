@@ -1,0 +1,389 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   THE FORGE — v2 design tokens
+   The site is a workshop you walk through. Cold things are sketches; hot
+   things are being worked; finished things have cooled and carry a mark.
+   Ember = heat = effort being spent, so it lives on whatever is active.
+   ========================================================================= */
+
+@theme {
+  /* --- Ink: cooled metal ------------------------------------------------ */
+  --color-ink-990: #040404;
+  --color-ink-950: #080807;
+  --color-ink-900: #0e0d0c;
+  --color-ink-850: #141311;
+  --color-ink-800: #1a1916;
+  --color-ink-700: #262420;
+  --color-ink-600: #34312c;
+  --color-ink-500: #4a463f;
+
+  /* --- Cream: light, warmed so it never fights the ember --------------- */
+  --color-cream: #f3efe8;
+  --color-cream-dim: #aaa59b;
+  --color-cream-faint: #837e74;
+
+  /* --- Steel: what metal looks like once it's quenched ------------------ */
+  --color-steel-600: #4d525a;
+  --color-steel-400: #8a919b;
+  --color-steel-200: #c9ced4;
+
+  /* --- Ember: the heat ramp, coolest to white-hot ----------------------- */
+  --color-ember-900: #3a1203;
+  --color-ember-800: #6b2205;
+  --color-ember-700: #9a3208;
+  --color-ember-600: #d2440a;
+  --color-ember-500: #f4570d;
+  --color-ember-400: #ff8a4c;
+  --color-ember-300: #ffb07a;
+  --color-ember-200: #ffd4b0;
+  --color-white-hot: #fff6ec;
+
+  /* --- Type ------------------------------------------------------------- */
+  --font-display: var(--font-general-sans), "General Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "Cascadia Mono", monospace;
+
+  /* --- Motion ----------------------------------------------------------- */
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-forge: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-strike: cubic-bezier(0.7, 0, 0.2, 1);
+
+  /* --- Fluid type ------------------------------------------------------- */
+  --text-stamp-xl: clamp(2.75rem, 1rem + 6.2vw, 7.25rem);
+  --text-stamp-xl--line-height: 0.95;
+
+  --text-stamp-lg: clamp(2.25rem, 1.15rem + 3.7vw, 4.75rem);
+  --text-stamp-lg--line-height: 0.98;
+
+  --text-stamp-md: clamp(1.45rem, 1.1rem + 1.4vw, 2.25rem);
+  --text-stamp-md--line-height: 1.05;
+
+  /* Kept for the long-form pages (case studies, resume). */
+  --text-display-xl: clamp(2.5rem, 1.4rem + 4.8vw, 5.25rem);
+  --text-display-xl--line-height: 1.02;
+  --text-display-xl--letter-spacing: -0.03em;
+  --text-display-lg: clamp(1.95rem, 1.3rem + 2.7vw, 3.5rem);
+  --text-display-lg--line-height: 1.06;
+  --text-display-lg--letter-spacing: -0.025em;
+  --text-display-md: clamp(1.375rem, 1.15rem + 1vw, 1.9rem);
+  --text-display-md--line-height: 1.18;
+  --text-display-md--letter-spacing: -0.015em;
+
+  --text-label: 0.6875rem;
+  --text-label--line-height: 1.4;
+  --text-micro: 0.625rem;
+  --text-micro--line-height: 1.4;
+}
+
+/* ============================================================================
+   BASE
+   ========================================================================= */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  background: var(--color-ink-950);
+}
+
+body {
+  background: var(--color-ink-950);
+  color: var(--color-cream);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+::selection {
+  background: rgba(244, 87, 13, 0.35);
+  color: var(--color-white-hot);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ember-500);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-ink-600) transparent;
+}
+
+/* ============================================================================
+   UTILITIES
+   ========================================================================= */
+
+/* The display voice: General Sans, heavy and tightly set. */
+@utility font-stamp {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+}
+
+@utility index-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+@utility micro-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+/* Outline-only type: an idea that hasn't been made yet. */
+@utility text-sketch {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(243, 239, 232, 0.28);
+}
+
+/* Type filled with the heat ramp. */
+@utility text-molten {
+  background-image: linear-gradient(
+    180deg,
+    var(--color-white-hot) 0%,
+    var(--color-ember-200) 22%,
+    var(--color-ember-400) 48%,
+    var(--color-ember-600) 78%,
+    var(--color-ember-800) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Finished metal: a brushed cream with a little light across the top. */
+@utility text-forged {
+  background-image: linear-gradient(
+    180deg,
+    #fffaf3 0%,
+    var(--color-cream) 45%,
+    #cfc8bc 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility u-draw {
+  background-image: linear-gradient(var(--color-ember-500), var(--color-ember-500));
+  background-repeat: no-repeat;
+  background-position: left calc(100% - 0.05em);
+  background-size: 0% 1px;
+  transition: background-size 260ms var(--ease-premium);
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+@utility u-drawn {
+  background-image: linear-gradient(var(--color-ember-500), var(--color-ember-500));
+  background-repeat: no-repeat;
+  background-position: left calc(100% - 0.05em);
+  background-size: 100% 1px;
+}
+
+@utility seam-x {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-ink-700) 12%,
+    var(--color-ink-600) 50%,
+    var(--color-ink-700) 88%,
+    transparent
+  );
+}
+
+@utility seam-hot {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(244, 87, 13, 0.45) 30%,
+    rgba(255, 176, 122, 0.85) 50%,
+    rgba(244, 87, 13, 0.45) 70%,
+    transparent
+  );
+}
+
+/* Blueprint paper: the grid ideas are drawn on. */
+@utility blueprint {
+  background-image:
+    linear-gradient(to right, rgba(243, 239, 232, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(243, 239, 232, 0.045) 1px, transparent 1px),
+    linear-gradient(to right, rgba(243, 239, 232, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(243, 239, 232, 0.02) 1px, transparent 1px);
+  background-size:
+    96px 96px,
+    96px 96px,
+    24px 24px,
+    24px 24px;
+}
+
+/* Raised steel surface. Elevation is tone and a hairline, never a drop shadow. */
+@utility plate {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 40%),
+    var(--color-ink-900);
+  border: 1px solid var(--color-ink-700);
+}
+
+@utility tap {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+}
+
+@utility rail {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 84rem;
+  padding-inline: 1rem;
+  @media (width >= 40rem) {
+    padding-inline: 2rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 3rem;
+  }
+}
+
+@utility section-y {
+  padding-block: 6rem;
+  @media (width >= 48rem) {
+    padding-block: 9rem;
+  }
+}
+
+@utility ember-breathe {
+  animation: ember-breathe 2.6s ease-in-out infinite;
+}
+
+@utility furnace-breathe {
+  animation: furnace-breathe 5s ease-in-out infinite;
+}
+
+/* ============================================================================
+   KEYFRAMES
+   ========================================================================= */
+
+@keyframes ember-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes furnace-breathe {
+  0%,
+  100% {
+    opacity: 0.75;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* A heat-map day catching: white flash, then it settles to its own heat. */
+@keyframes ignite {
+  0% {
+    background-color: var(--color-ink-800);
+    transform: scale(0.5);
+  }
+  35% {
+    background-color: var(--color-white-hot);
+    box-shadow: 0 0 12px 2px rgba(244, 87, 13, 0.9);
+    transform: scale(1.2);
+  }
+  100% {
+    background-color: var(--c);
+    box-shadow: var(--g);
+    transform: scale(1);
+  }
+}
+
+.ignite {
+  animation: ignite 0.9s var(--ease-premium) both;
+}
+
+@utility marquee {
+  animation: marquee 40s linear infinite;
+}
+
+/* ============================================================================
+   TEXTURE
+   ========================================================================= */
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ============================================================================
+   REDUCED MOTION
+   ========================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.08s !important;
+  }
+}
+
+/* ============================================================================
+   PRINT — the forge goes cold and the page goes light
+   ========================================================================= */
+
+@media print {
+  .grain,
+  .no-print {
+    display: none !important;
+  }
+  html,
+  body {
+    background: #ffffff !important;
+    color: #17171a !important;
+  }
+  a {
+    color: #17171a !important;
+    text-decoration: none !important;
+    background-image: none !important;
+  }
+}
