@@ -14,7 +14,10 @@ import { getAchievements, getProject, getWrittenProjects } from "@/lib/content";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getWrittenProjects().map((p) => ({ slug: p.slug }));
+  const slugs = getWrittenProjects().map((p) => ({ slug: p.slug }));
+  // The static export refuses an empty list, so until the first write-up exists
+  // emit one placeholder that renders the 404 page.
+  return slugs.length ? slugs : [{ slug: "_" }];
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
